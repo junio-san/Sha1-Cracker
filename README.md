@@ -22,12 +22,17 @@ hex = "0.4"
 
 ## How it Works
 
-1 -  The program first checks the number of command-line arguments. If the number of arguments is not exactly 3, it displays a usage message and exits.
-2 -  It extracts the SHA1 hash from the second argument and checks if it has a valid length of 40 characters.
-3 -  It opens the wordlist file specified in the first argument.
-4 -  It reads the wordlist file line by line and compares the SHA1 hash of each password with the provided hash.
-5 -  If a match is found, it prints the password and exits.
-6 -  If no match is found after checking all passwords in the wordlist, it displays a message indicating that the password was not found.
+1-  The program first checks the number of command-line arguments. If the number of arguments is not exactly 3, it displays a usage message and exits.
+
+2-  It extracts the SHA1 hash from the second argument and checks if it has a valid length of 40 characters.
+
+3-  It opens the wordlist file specified in the first argument.
+
+4-  It reads the wordlist file line by line and compares the SHA1 hash of each password with the provided hash.
+
+5-  If a match is found, it prints the password and exits.
+
+6-  If no match is found after checking all passwords in the wordlist, it displays a message indicating that the password was not found.
 
 ## Example
 
