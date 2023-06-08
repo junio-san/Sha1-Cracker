@@ -3,10 +3,17 @@
 This program is a simple SHA1 hash cracker that attempts to find the original password from a given SHA1 hash and a wordlist.
 
 ## Usage
+> Compiler
+
+To compile the program, run it with the following command:
+```sh
+cargo build --release
+```
+> Run
 
 To use the program, run it with the following command:
 ```sh
-sha1_cracker <wordlist.txt> <sha1_hash>
+./target/release/sha1_cracker <wordlist.txt> <sha1_hash>
 ```
 - **<wordlist.txt>**: The path to a text file containing a list of common passwords to check against the hash.
 - **<sha1_hash>**: The SHA1 hash to crack.
