@@ -1,40 +1,12 @@
-use sha1::Digest;
-use std::{
-    env,
-    error::Error,
-    fs::File,
-    io::{BufRead, BufReader},
-};
+use shars::{search, config::Config};
+use std::{process, fs};
 
-const SHA1_HEX_STRING_LENGTH: usize = 40;
+fn main() {
+        let config = Config::build().unwrap_or_else(|err| {
+            eprintln!("Error while parsing arguments: {err}");
+            process::exit(1);
+        });
 
-fn main() -> Result<(), Box<dyn Error>> {
-    let args: Vec<String> = env::args().collect();
-
-    if args.len() != 3 {
-        println!("Usage:");
-        println!("sha1_cracker: <wordlist.txt> <sha1_hash>");
-        return Ok(());
-    }
-
-    let hash_to_crack: &str = args[2].trim();
-    if hash_to_crack.len() != SHA1_HEX_STRING_LENGTH {
-        return Err("sha1 hash is not valid".into());
-    }
-
-    let wordlist_file: File = File::open(&args[1])?;
-    let reader: BufReader<&File> = BufReader::new(&wordlist_file);
-
-    for line in reader.lines() {
-        let line: String = line?;
-        let common_password: &str = line.trim();
-        if hash_to_crack == &hex::encode(sha1::Sha1::digest(common_password.as_bytes())) {
-            println!("Password found: {}", &common_password);
-            return Ok(());
-        }
-    }
-
-    println!("password not found in wordlist :(");
-    // as almost everything is an expression, this is equivalent to return Ok(());
-    Ok(())
+        let content = fs::read_to_string(config.file_path).unwrap();
+        search(content, config.hash_value)
 }
