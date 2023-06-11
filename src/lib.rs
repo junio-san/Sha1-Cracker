@@ -1,19 +1,21 @@
 pub mod config;
 
-use hex::encode;
+#[allow(unused_imports)]
+use std::io::BufRead;
 use sha2::{Sha256, Digest};
 
 // Search through file lines checking if matches hash input
-pub fn search(content: String, hash_value: String) {
+pub fn search(content: String, hash_value: &str) {
     let val = content
         .lines()
-        .rfind(|line|{
-            let hash = Sha256::digest(line);
-            hash_value == encode(hash)
-        } );
+        .find(|line| {
+
+            let hash = hex::encode(Sha256::digest(line));
+            hash_value == hash
+        });
 
     match val {
         Some(pass) => print!("Password Found: {pass}"),
-        _ => println!("No password found"),
+        None => println!("Password not found"),
     };
 }

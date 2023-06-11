@@ -8,5 +8,5 @@ fn main() {
         });
 
         let content = fs::read_to_string(config.file_path).unwrap();
-        search(content, config.hash_value)
+        search(content, &config.hash_value)
 }
