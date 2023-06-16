@@ -1,5 +1,5 @@
 [package]
-name = "shars"
+name = "cryptea"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,5 +7,10 @@ edition = "2021"
 
 [dependencies]
 sha2 = "0.10"
+digest = "0.10.7"
 hex = "0.4.3"
+md5 = "0.7.0"
+sha1 = "0.10.5"
+
 clap = { version = "4.3.3", features = ["derive"] }
+anyhow = "1.0"
