@@ -1,8 +1,5 @@
 use std::fs;
-use std::path::PathBuf;
 
-use clap::Command;
-use clap::{arg, value_parser};
 pub mod config;
 use config::Config;
 use digest::{Digest, DynDigest};
@@ -80,46 +77,3 @@ impl Hash {
     }
 }
 
-/// CLI parses arguments into it
-pub fn cli() -> clap::Command {
-    Command::new("srs")
-        .about("SHA hash family parser and cracker")
-        .subcommand_required(true)
-        .arg_required_else_help(true)
-        .allow_external_subcommands(true)
-        .subcommand(
-            Command::new("crack")
-                .about("Crack hash by matching hash function in a file")
-                .arg(
-                    arg!(path: [PATH])
-                        .num_args(1)
-                        .value_parser(value_parser!(PathBuf))
-                        .group("FIND"),
-                )
-                .arg_required_else_help(true)
-                .arg(
-                    arg!(hash: [HASH])
-                        .require_equals(false)
-                        .num_args(1)
-                        .value_parser(value_parser!(String))
-                        .group("FIND"),
-                )
-                .arg_required_else_help(true),
-        )
-        .subcommand(
-            Command::new("parse")
-                .about("Parse word using SHA256 hash function")
-                .arg(arg!(value: <STRING> "String value to convert")),
-        )
-        .subcommand(Command::new("example").about("Run example with "))
-}
-
-// fn custom_type() -> clap::Arg {
-//     arg!(type: [TYPE])
-//         .value_parser(["md5", "sha1", "sha224", "sha256", "sha384", "sha512"])
-//         .num_args(1)
-//         .require_equals(false)
-//         .required(false)
-//         .default_value("Sha256")
-//         .value_parser(value_parser!(String))
-// }
