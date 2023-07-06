@@ -1,9 +1,5 @@
-use clap::ArgMatches;
-use cryptea::{config::Config, Hash};
-
-use std::path::PathBuf;
+use std::env;
 
 fn main() {
-
-    let arguments = std::env::args().map().collect();
+    let arguments = env::args();
 }

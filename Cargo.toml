@@ -9,8 +9,6 @@ edition = "2021"
 sha2 = "0.10"
 digest = "0.10.7"
 hex = "0.4.3"
-md5 = "0.7.0"
 sha1 = "0.10.5"
 
-clap = { version = "4.3.3", features = ["derive"] }
 anyhow = "1.0"

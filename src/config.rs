@@ -29,7 +29,6 @@ impl Config {
         self.hash_type.clone()
     }
 
-
     fn new(file_path: PathBuf, hash_value: String, hash_type: Hash) -> Config {
         Self {
             file_path,

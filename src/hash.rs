@@ -1,37 +1,5 @@
-use std::{env::Args, fs};
-
-pub mod config;
-use anyhow::Result;
-use config::Config;
 use digest::{Digest, DynDigest};
 use sha2::Sha256;
-
-pub enum ArgsOptions {
-    Help,
-    Find,
-    Parse,
-    Example,
-    Type,
-    Invalid,
-}
-
-pub fn build(mut arg: impl Iterator<Item = String>) -> Result<String> {
-    arg.next();
-    let test: ArgsOptions;
-
-    while arg.next().is_some() {
-        let opt = match arg.next().expect("Argument").to_lowercase().as_str() {
-            "-h" | "--help" => ArgsOptions::Help,
-            "-t" | "--type" => ArgsOptions::Type,
-            "-f" | "--find" => ArgsOptions::Find,
-            "-p" | "--parse" => ArgsOptions::Parse,
-            "--example" => ArgsOptions::Example,
-            _ => ArgsOptions::Invalid,
-        };
-    }
-
-    Ok("cu".into())
-}
 
 #[derive(Clone)]
 pub enum Hash {
@@ -49,7 +17,6 @@ impl Hash {
             print!("invalid file");
             return;
         }
-
         let path = fs::read_to_string(config.file_path).expect("Error loading file");
 
         match path
@@ -99,3 +66,5 @@ impl Hash {
         hasher.finalize_reset()
     }
 }
+
+
