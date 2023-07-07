@@ -82,44 +82,37 @@ impl Hash {
 
 /// CLI parses arguments into it
 pub fn cli() -> clap::Command {
-    Command::new("srs")
+    Command::new("Cryptea")
         .about("SHA hash family parser and cracker")
         .subcommand_required(true)
         .arg_required_else_help(true)
-        .allow_external_subcommands(true)
         .subcommand(
-            Command::new("crack")
-                .about("Crack hash by matching hash function in a file")
-                .arg(
-                    arg!(path: [PATH])
-                        .num_args(1)
-                        .value_parser(value_parser!(PathBuf))
-                        .group("FIND"),
-                )
-                .arg_required_else_help(true)
-                .arg(
-                    arg!(hash: [HASH])
-                        .require_equals(false)
-                        .num_args(1)
-                        .value_parser(value_parser!(String))
-                        .group("FIND"),
-                )
-                .arg_required_else_help(true),
+            Command::new("find")
+                .about("Crack <file> by matching <hash> on each line from file")
+                .args(&[
+                    arg!(<file> "<file> path to search for <hash> value")
+                        .value_parser(value_parser!(PathBuf)),
+                    arg!(<hash> "<hash> to match possible original value inside <file>")
+                        .value_parser(value_parser!(String)),
+                    custom_hash(),
+                ]),
         )
         .subcommand(
             Command::new("parse")
                 .about("Parse word using SHA256 hash function")
-                .arg(arg!(value: <STRING> "String value to convert")),
+                .args(&[
+                    arg!(<value> "String value to convert").value_parser(value_parser!(String)),
+                    custom_hash(),
+                ]),
         )
         .subcommand(Command::new("example").about("Run example with "))
 }
 
-// fn custom_type() -> clap::Arg {
-//     arg!(type: [TYPE])
-//         .value_parser(["md5", "sha1", "sha224", "sha256", "sha384", "sha512"])
-//         .num_args(1)
-//         .require_equals(false)
-//         .required(false)
-//         .default_value("Sha256")
-//         .value_parser(value_parser!(String))
-// }
+fn custom_hash() -> clap::Arg {
+    arg!([type] "Select which hash function [type] to use on encryption and digesting values.\n")
+        .value_parser(["sha224", "sha256", "sha384", "sha512"])
+        .long("type")
+        .require_equals(false)
+        .required(false)
+        .default_value("sha256")
+}

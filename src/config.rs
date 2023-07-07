@@ -28,13 +28,4 @@ impl Config {
     pub fn get_hash_type(&self) -> Hash {
         self.hash_type.clone()
     }
-
-
-    fn new(file_path: PathBuf, hash_value: String, hash_type: Hash) -> Config {
-        Self {
-            file_path,
-            hash_value,
-            hash_type,
-        }
-    }
 }
